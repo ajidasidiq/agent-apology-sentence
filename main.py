@@ -28,6 +28,10 @@ def main() -> None:
     # else. Refuse to write an entry that would fail it.
     if not 1 <= len(ENTRY) <= 200:
         raise ValueError(f"entry is {len(ENTRY)} characters, gate needs 1-200")
+    # The bounty asks for exactly one sentence: a single terminal
+    # full stop, no second sentence hiding after it.
+    if ENTRY.count(".") != 1 or not ENTRY.endswith("."):
+        raise ValueError("entry must be exactly one sentence")
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(ENTRY, encoding="utf-8")
     print(ENTRY)
